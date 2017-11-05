@@ -34,7 +34,11 @@ class User
   }
 
   public function update(){
-
+    $stmt = $this->db->stmt_init();
+    $stmt->prepare("update user set name = ?, email = ? where id = ?");
+    $stmt->bind_param("ssi",$this->name,$this->email,$this->id);
+    $stmt->execute();
+    return $stmt->execute();
   }
 
   public function delete(){

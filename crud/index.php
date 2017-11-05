@@ -17,10 +17,10 @@ if (mysqli_connect_errno()) {
 
 $user = new User($mysqli);
 
-$user->setName("Well")->setEmail("well@email.com");
-// echo $user->insert();
+$user->setId("1")->setName("Tom")->setEmail("Tom@email.com");
+ echo "Ret: ".$user->update()."<br/>";
 
-$rest = $user->list("name");
+$rest = $user->list();
 foreach ($rest as $value) {
   echo $value['id']."<br/>";
   echo $value['name']."<br/>";
