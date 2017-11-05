@@ -14,8 +14,15 @@ class User
     $this->db = $mysqli;
   }
 
-  public function list(){
-    
+  public function list($order = null){
+    if ($order) {
+      $sql = "select * from user order by {$order}";
+    }else {
+      $sql = "select * from user";
+    }
+
+    $query = $this->db->query($sql);
+    return $query->fetch_all(MYSQLI_ASSOC);
   }
 
   public function insert(){

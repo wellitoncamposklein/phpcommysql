@@ -18,6 +18,13 @@ if (mysqli_connect_errno()) {
 $user = new User($mysqli);
 
 $user->setName("Well")->setEmail("well@email.com");
-echo $user->insert();
+// echo $user->insert();
 
+$rest = $user->list("name");
+foreach ($rest as $value) {
+  echo $value['id']."<br/>";
+  echo $value['name']."<br/>";
+  echo $value['email']."<hr/>";
+}
+// var_dump($user->list());
 ?>
