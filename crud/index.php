@@ -17,14 +17,15 @@ if (mysqli_connect_errno()) {
 
 $user = new User($mysqli);
 
-$user->setId("1")->setName("Tom")->setEmail("Tom@email.com");
- echo "Ret: ".$user->update()."<br/>";
+// $user->setId("1")->setName("Tom")->setEmail("Tom@email.com");
+ // echo "Ret: ".$user->delete()."<br/>";
 
-$rest = $user->list();
-foreach ($rest as $value) {
-  echo $value['id']."<br/>";
-  echo $value['name']."<br/>";
-  echo $value['email']."<hr/>";
-}
+$ret = $user->find(2);
+echo $ret["name"];
+// foreach ($rest as $value) {
+//   echo $value['id']."<br/>";
+//   echo $value['name']."<br/>";
+//   echo $value['email']."<hr/>";
+// }
 // var_dump($user->list());
 ?>

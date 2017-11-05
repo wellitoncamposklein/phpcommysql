@@ -14,6 +14,17 @@ class User
     $this->db = $mysqli;
   }
 
+  public function find($id){
+    $stmt = $this->db->stmt_init();
+    $stmt->prepare("select name,email from user where id = ?");
+    $stmt->bind_param("i",$this->id);
+    $stmt->execute();
+    $stmt->bind_result($name,$email);
+    $stmt->fetch();
+
+    return array("id" => $id,"name" => $name,"email" => $email );
+  }
+
   public function list($order = null){
     if ($order) {
       $sql = "select * from user order by {$order}";
@@ -38,11 +49,17 @@ class User
     $stmt->prepare("update user set name = ?, email = ? where id = ?");
     $stmt->bind_param("ssi",$this->name,$this->email,$this->id);
     $stmt->execute();
+
     return $stmt->execute();
   }
 
-  public function delete(){
+  public function delete($id){
+    $stmt = $this->db->stmt_init();
+    $stmt->prepare("delete from user where id = ?");
+    $stmt->bind_param("i",$id);
+    $stmt->execute();
 
+    return $stmt->execute();
   }
 
   public function getId(){
