@@ -1,5 +1,6 @@
 <?php
 require_once("user.php");
+require_once("service_user.php");
 
 $server = "localhost";
 $user = "root";
@@ -15,17 +16,20 @@ if (mysqli_connect_errno()) {
   exit;
 }
 
-$user = new User($mysqli);
+$user = new User();
 
-// $user->setId("1")->setName("Tom")->setEmail("Tom@email.com");
- // echo "Ret: ".$user->delete()."<br/>";
+$user->setName("Pedro")->setEmail("Pedro@email.com");
+ // echo "Ret: ".$serviceUser->delete()."<br/>";
 
-$ret = $user->find(2);
-echo $ret["name"];
-// foreach ($rest as $value) {
-//   echo $value['id']."<br/>";
-//   echo $value['name']."<br/>";
-//   echo $value['email']."<hr/>";
-// }
+$serviceUser = new Service_user($mysqli,$user);
+
+echo $serviceUser->insert();
+
+$rest = $serviceUser->list();
+foreach ($rest as $value) {
+  echo $value['id']."<br/>";
+  echo $value['name']."<br/>";
+  echo $value['email']."<hr/>";
+}
 // var_dump($user->list());
 ?>

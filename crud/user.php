@@ -2,64 +2,13 @@
 
 class User
 {
-
-  private $db;
-
+  private $table = "user";
   private $id;
   private $name;
   private $email;
 
-  function __construct(Mysqli $mysqli)
-  {
-    $this->db = $mysqli;
-  }
-
-  public function find($id){
-    $stmt = $this->db->stmt_init();
-    $stmt->prepare("select name,email from user where id = ?");
-    $stmt->bind_param("i",$this->id);
-    $stmt->execute();
-    $stmt->bind_result($name,$email);
-    $stmt->fetch();
-
-    return array("id" => $id,"name" => $name,"email" => $email );
-  }
-
-  public function list($order = null){
-    if ($order) {
-      $sql = "select * from user order by {$order}";
-    }else {
-      $sql = "select * from user";
-    }
-
-    $query = $this->db->query($sql);
-    return $query->fetch_all(MYSQLI_ASSOC);
-  }
-
-  public function insert(){
-    $stmt = $this->db->stmt_init();
-    $stmt->prepare("insert into user (name,email) value (?,?)");
-    $stmt->bind_param("ss",$this->name,$this->email);
-    $stmt->execute();
-    return $stmt->insert_id;
-  }
-
-  public function update(){
-    $stmt = $this->db->stmt_init();
-    $stmt->prepare("update user set name = ?, email = ? where id = ?");
-    $stmt->bind_param("ssi",$this->name,$this->email,$this->id);
-    $stmt->execute();
-
-    return $stmt->execute();
-  }
-
-  public function delete($id){
-    $stmt = $this->db->stmt_init();
-    $stmt->prepare("delete from user where id = ?");
-    $stmt->bind_param("i",$id);
-    $stmt->execute();
-
-    return $stmt->execute();
+  public function getTable(){
+    return $this->table;
   }
 
   public function getId(){
